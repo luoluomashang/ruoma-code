@@ -1,0 +1,81 @@
+{
+  "version": "3.0",
+  "project_name": "",
+  "created_at": "",
+  "updated_at": "",
+  "current_step": 0,
+  "planning_state": {
+    "current_step": 1,
+    "current_volume": 1
+  },
+  "completed_steps": [],
+  "config": {
+    "novel_type_tags": [],
+    "benchmark_works": [],
+    "creation_mode": "mode_3",
+    "execution_mode": "strict",
+    "workflow_mode": "guided",
+    "reply_length": "D",
+    "interaction_options": "F",
+    "recap_and_guide": "N",
+    "periodic_summary": "O",
+    "rule_self_check": "Y",
+    "age_rule": "",
+    "enabled_excluded_elements": [],
+    "sensitivity_default": "GREEN",
+    "writing_mode": "pipeline"
+  },
+  "world_setting": {
+    "era_background": "",
+    "protagonist_dilemma": "",
+    "core_info_gap": "",
+    "protagonist": {
+      "name": "",
+      "identity": "",
+      "personality": "",
+      "appearance": "",
+      "physiology_abilities": "",
+      "relationship_to_user": ""
+    },
+    "user_identity": "",
+    "perception_layer": ""
+  },
+  "special_rules": {
+    "tracked_states": [],
+    "custom_rules": []
+  },
+  "chapter_state": {
+    "current_chapter": 0,
+    "chapter_objectives": [],
+    "objective_status": {},
+    "pending_foreshadowing": []
+  },
+  "memory": {
+    "last_updated": "",
+    "file": "memory.md"
+  },
+  "summary_state": {
+    "total_groups_completed": 0,
+    "last_summarized_chapter": 0,
+    "pending_resummary": [],
+    "progress_file": "summaries/_progress.json"
+  },
+  "knowledge_base_version": 0,
+  "dialogue_count_since_summary": 0,
+  "files": {
+    "benchmark_report": null,
+    "one_sentence": null,
+    "one_paragraph": null,
+    "characters": null,
+    "one_page": null,
+    "character_arcs": null,
+    "four_pages": null,
+    "knowledge_base": null,
+    "scene_list": null,
+    "scene_plans": [],
+    "chapters": [],
+    "title_and_synopsis": null,
+    "quality_reports": [],
+    "quarantine": []
+  }
+}
