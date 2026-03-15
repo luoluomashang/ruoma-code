@@ -46,26 +46,24 @@ orchestrator 会在调用时内联提供以下参数：
 
 ### 1. 读取输入
 
-```
-### 场景参数来源（二选一）
+#### 场景参数来源（二选一）
 
-如果 scene_plan_path 有值（流水线模式）：
+如果 `scene_plan_path` 有值（流水线模式）：
   → 读取场景规划文件 → 提取：视点人物、场景类型、冲突设计、伏笔操作
 
-如果 scene_plan_path 为 null 且 user_instruction 有值（互动模式）：
-  → 从 user_instruction 中提取写作方向（parsed_scene 结构）
-  → bangui_context 中如有帮回逻辑，作为风格和行动指导
-  → 自主构建场景结构（视点、冲突、节奏），但必须遵循 user_instruction 的核心意图
+如果 `scene_plan_path` 为 null 且 `user_instruction` 有值（互动模式）：
+  → 从 `user_instruction` 中提取写作方向（`parsed_scene` 结构）
+  → `bangui_context` 中如有帮回逻辑，作为风格和行动指导
+  → 自主构建场景结构（视点、冲突、节奏），但必须遵循 `user_instruction` 的核心意图
 
-读取 config_files 中的每个文件：
-  - config/writing_rules.yaml（描写规范，第一优先级）
-  - config/style_rules.yaml（语言风格）
-  - config/content_limits.yaml（内容限制）
-  - config/meta_rules.yaml（元指令）
-  - config/declarations.yaml（如需声明注入）
-  - config/golden_opening.yaml（如 chapter_number ≤ 3）
-读取 previous_chapter_path → 取末尾 500 字
-```
+读取 `config_files` 中的每个文件：
+  - `config/writing_rules.yaml`（描写规范，第一优先级）
+  - `config/style_rules.yaml`（语言风格）
+  - `config/content_limits.yaml`（内容限制）
+  - `config/meta_rules.yaml`（元指令）
+  - `config/declarations.yaml`（如需声明注入）
+  - `config/golden_opening.yaml`（如 chapter_number ≤ 3）
+读取 `previous_chapter_path` → 取末尾 500 字
 
 ### 2. 声明注入
 
@@ -83,9 +81,13 @@ orchestrator 会在调用时内联提供以下参数：
 
 - 字数：遵循 `state_config.reply_length`（A=3000+ / B=1500 / C=800 / D=自主决定）
 - 对话生成：行为驱动 + 递归记忆（参考 kb_slice 中的角色对话风格）
-- 情节控制：流水线模式下严格执行场景规划中的冲突设计；互动模式下遵循 user_instruction 中的冲突方向
-- 前三章额外执行 golden_opening 规则
+- 情节控制：流水线模式下严格执行场景规划中的冲突设计；互动模式下遵循 `user_instruction` 中的冲突方向
+- 前三章额外执行 `golden_opening` 规则
 - 章节末必须设置悬念卡点
+- 专业背景（如物理博士）应体现在主角‘破局的独特视角’和‘解决问题的方法’上，严禁为了凸显人设而在严肃、紧张的场景中进行无意义的、出戏的内心专业词汇吐槽
+- 信息阅后即焚：如果你在前面的场景或段落中已经交代过主角的背景、财务状况、某项设定的原理或当前的环境特征（如“蓝天白云”），在后续场景中绝对禁止以任何形式再次解释或重复描写！
+- 禁止情绪原地打转：角色的情绪和认知必须是单向向前流动的。如果场景一主角感到震惊，场景二必须进入应对或反击状态，严禁在场景二中再次描写“他依然感到难以置信”。
+- 无缝衔接：不要在每个新场景开头重新搭建舞台。默认读者拥有完美的短时记忆，直接用动作或对话切入新场景。
 
 ### 4. HC1-HC5 自检
 

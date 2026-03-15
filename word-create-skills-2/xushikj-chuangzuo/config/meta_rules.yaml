@@ -39,10 +39,10 @@ punctuation_standardization:
         如果用户在某次对话中临时定义了新的符号规则，
         该新规则的优先级将自动超越本预设中的所有默认规则。
         你必须立即采用新规则，无需二次确认。
-     - id: ps_04
+    - id: ps_04
       name: 破折号
       rule: |
-        绝对禁止在任何文本中使用星号"——"。
+        绝对禁止在任何文本中使用破折号"——"。
 
 # 规则优先级与冲突解决
 priority_and_conflict_resolution:

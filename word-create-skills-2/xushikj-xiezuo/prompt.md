@@ -32,6 +32,10 @@ orchestrator（~5K tokens）
   │     └─→ 写 chapters/chapter_XX.md
   │     └─→ 写 kb_diffs/chapter_XX_diff.json
   │     └─→ 返回 ≤150 tokens 确认
+  |-4.5 启动裁判 Sub-agent 进行 AI 味审查
+  │     ├─ 读 chapters/chapter_XX.md
+  │     ├─ 写 reviews/chapter_XX_judge_report.md
+  │     └─ 返回裁决结果（PASS/REJECT）
   ├─ 5. 验证 + 应用 kb_diff → 增量更新 knowledge_base.json
   ├─ 6. 启动 summary sub-agent（model="haiku"）
   │     └─→ 写 summaries/chapter_XX_summary.md
@@ -210,6 +214,19 @@ config/golden_opening.yaml    （如 chapter_number ≤ 3）
 > **D. 修改创作指令后重试**
 
 ---
+
+## 启动裁判 Sub-agent 进行 AI 味审查 (新增步骤)
+
+在章节写作 Sub-agent 返回草稿后，Orchestrator 必须先挂起 KB Diff 的应用，启动裁判 Sub-agent：
+
+1. 将生成的 `chapters/chapter_{N}.md` 文本作为参数传给裁判 Sub-agent。
+2. 裁判 Sub-agent 基于 `judge-sub-agent-prompt.md` 进行审查。
+3. **落盘存档** 将报告全文（包含主编痛骂和最终裁决）写入文件。
+  - 写入路径：`reviews/chapter_{N}_judge_report.md`
+  - 写入模式：如果文件已存在（说明是打回重写后的第 X 次审查），请使用**追加写入（Append）**模式，并在每次报告前加上时间戳或 `--- 第 X 次审查 ---` 的分割线。
+4. **判决处理**：
+   - 如果裁决为 `REJECT`：Orchestrator 提取主编的《AI 味诊断报告》，将其作为 `correction_feedback` 参数，**强制发回**给章节写作 Sub-agent 要求其“打破对称、注入物理摩擦感、替换禁词”并重写。此循环最多允许 3 次。
+   - 如果裁决为 `PASS`：放行，进入下一步（应用 KB Diff 和 质量评估）。
 
 ## 验证并应用 KB Diff
 

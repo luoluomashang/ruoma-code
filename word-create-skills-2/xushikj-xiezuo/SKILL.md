@@ -35,6 +35,10 @@ orchestrator
   │     ├─ 写 chapters/chapter_XX.md
   │     ├─ 写 kb_diffs/chapter_XX_diff.json
   │     └─ 返回 ≤150 tokens 确认
+  |-─ 启动 judge sub-agent 进行 AI 味审查
+  │     ├─ 读 chapters/chapter_XX.md
+  │     ├─ 写 reviews/chapter_XX_judge_report.md
+  │     └─ 返回裁决结果（PASS/REJECT）
   ├─ 验证 + 应用 KB diff → 增量更新 knowledge_base.json
   ├─ 启动 summary sub-agent（model="haiku"）
   │     ├─ 写 summaries/chapter_XX_summary.md
@@ -63,6 +67,7 @@ orchestrator
 | 文件路径 | 说明 |
 |----------|------|
 | `.xushikj/chapters/chapter_XX.md` | 各章正文（sub-agent 产出） |
+| `.xushikj/reviews/chapter_XX_judge_report.md` | AI 味审查报告（judge sub-agent 产出） |
 | `.xushikj/kb_diffs/chapter_XX_diff.json` | KB 变更记录（sub-agent 产出） |
 | `.xushikj/summaries/chapter_XX_summary.md` | 各章概括（summary sub-agent 产出） |
 | `.xushikj/summaries/summary_index.md` | 概括索引（summary sub-agent 维护） |
@@ -113,6 +118,16 @@ Sub-agent 接收 instruction package 后：
 2.5 生成 KB diff → 写入 kb_diffs/chapter_XX_diff.json
 2.6 写入 chapters/chapter_XX.md
 2.7 返回确认（≤150 tokens）
+```
+### 2.5. 启动裁判 Sub-agent 进行 AI 味审查（judge sub-agent）
+
+Sub-agent 接收 chapters/chapter_XX.md 后：
+```
+2.5.1 读取chapters/chapter_XX.md
+2.5.2 执行ai味审查（基于审查矩阵，逐段扫描）
+2.5.3 生成诊断报告（高亮触雷点，整体诊断，最终裁决）
+2.5.4 写入 reviews/chapter_XX_judge_report.md
+2.5.5 返回裁决结果（PASS/REJECT）
 ```
 
 ### 3. KB Diff 应用（orchestrator）
